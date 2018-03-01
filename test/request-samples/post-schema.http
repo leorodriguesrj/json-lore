@@ -1,0 +1,12 @@
+POST http://localhost:9001/schema/sample HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": "http://company.org/schema/sample",
+    "description": "Sample schema",
+    "type": "object",
+    "required": ["message"],
+    "properties": {
+        "message": "string"
+    }
+}
