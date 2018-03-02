@@ -19,4 +19,4 @@ function mount(server) {
 
 }
 
-module.exports = {mount}
+module.exports = {mount};

@@ -9,4 +9,4 @@ module.exports = function getSchemaById(request, response, next) {
     } catch(error) {
         next(new errors.InternalError(error.message));
     }
-}
+};

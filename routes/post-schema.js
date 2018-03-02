@@ -11,4 +11,4 @@ module.exports = async function postSchema(request, response, next) {
     } catch(error) {
         next(new errors.InternalError(error.message));
     }
-}
+};

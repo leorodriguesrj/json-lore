@@ -9,4 +9,4 @@ module.exports = async function getAllSchemas(request, response, next) {
     } catch(error) {
         next(new errors.InternalError(error.message));
     }
-}
+};
