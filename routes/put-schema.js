@@ -1,7 +1,7 @@
 const errors = require('restify-errors');
 const cache = require('../lib/data-cache');
 
-module.exports = async function postSchema(request, response, next) {
+module.exports = async function putSchema(request, response, next) {
     try {
         const id = request.params.id;
         const representation = request.body;

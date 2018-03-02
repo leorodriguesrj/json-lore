@@ -1,7 +1,7 @@
 
 const getSchemaById = require('./get-schema-by-id');
 const getAllSchemas = require('./get-all-schemas');
-const postSchema = require('./post-schema');
+const putSchema = require('./put-schema');
 
 const confirmSchemaExistsById = require('./confirm-schema-exists-by-id');
 
@@ -14,8 +14,8 @@ function mount(server) {
         confirmSchemaExistsById,
         getSchemaById);
 
-    server.post('/schema/:id',
-        postSchema);
+    server.put('/schema/:id',
+        putSchema);
 
 }
 
