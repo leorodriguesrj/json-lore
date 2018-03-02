@@ -7,7 +7,7 @@ const confirmSchemaExistsById = require('./confirm-schema-exists-by-id');
 
 function mount(server) {
 
-    server.get('/schema',
+    server.get('/schema/',
         getAllSchemas);
 
     server.get('/schema/:id',
