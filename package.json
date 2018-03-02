@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha --recursive --inspect=0.0.0.0:9229 --watch tests",
-    "dev": "nodemon index.js"
+    "dev": "nodemon --inspect=0.0.0.0:9229 index.js"
   },
   "repository": {
     "type": "git",
