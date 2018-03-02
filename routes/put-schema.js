@@ -1,11 +1,11 @@
 const errors = require('restify-errors');
-const cache = require('../lib/data-cache');
+const schemas = require('../lib/data-schema');
 
 module.exports = async function putSchema(request, response, next) {
     try {
         const id = request.params.id;
         const representation = request.body;
-        await cache.save(id, representation);
+        await schemas.save(id, representation);
         response.send(representation);
         next();
     } catch(error) {

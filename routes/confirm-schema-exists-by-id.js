@@ -1,10 +1,10 @@
-const cache = require('../lib/data-cache');
 const errors = require('restify-errors');
+const schemas = require('../lib/data-schema');
 
 async function confirmSchemaExistsById(request, response, next) {
     const id = request.params.id;
     try {
-        if (await cache.exists(id)) {
+        if (await schemas.exists(id)) {
             return next();
         }
         next(new errors.NotFoundError(`Schema '${id}' not found.`));
