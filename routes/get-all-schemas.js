@@ -12,7 +12,7 @@ function wrapCollectionInHal(obj) {
     resource.link('update', {href: '/schema/{id}', templated: true});
     resource.link('new', {href: '/schema/{id}', templated: true});
     resource.link('validate', {href: '/schema/{id}/instance', templated: true});
-    resource.embed('schemas', obj);
+    resource.embed('items', obj, false);
     return resource;
 }
 

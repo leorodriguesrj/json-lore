@@ -13,7 +13,8 @@ module.exports = {
         }],
         "new-cap": ["error", {
             "capIsNew": true,
-            "newIsCap": true
+            "newIsCap": true,
+            "capIsNewExceptions": ["Resource"]
         }],
         "newline-per-chained-call": ["error", {
             "ignoreChainWithDepth": 2
