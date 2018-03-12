@@ -1,4 +1,3 @@
-const moment = require('moment');
 const errors = require('restify-errors');
 const schemas = require('../lib/data-schema');
 

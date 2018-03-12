@@ -10,7 +10,7 @@ function confirmPayloadIntegrity(payloadSchema) {
             return next(new errors.BadRequestError('Malformed document.'));
         }
         next();
-    } 
+    };
 }
 
 module.exports = confirmPayloadIntegrity;
