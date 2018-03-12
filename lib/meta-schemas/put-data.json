@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "id": "http://company.org/schema/meta/put-data",
+    "description": "PUT metaschema",
+    "type": "object",
+    "required": ["body"],
+    "properties": {
+        "body": {
+            "type": "object"
+        }
+    }
+}

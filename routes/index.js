@@ -5,6 +5,8 @@ const putSchema = require('./put-schema');
 const postSchemaInstance = require('./post-schema-instance');
 
 const confirmSchemaExistsById = require('./confirm-schema-exists-by-id');
+const confirmPutDataIntegrity = require('./confirm-put-data-integrity');
+const confirmCoherentSchemaId = require('./confirm-coherent-schema-id');
 
 function mount(server) {
 
@@ -16,6 +18,9 @@ function mount(server) {
         getSchemaById);
 
     server.put('/schema/:id',
+        confirmPutDataIntegrity,
+        confirmCoherentSchemaId,
+        confirmSchemaExistsById,
         putSchema);
 
     server.post('/schema/:id/instance',

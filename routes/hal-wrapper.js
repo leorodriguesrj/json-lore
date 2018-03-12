@@ -15,7 +15,6 @@ function wrapSchemaCollection(collection) {
         total: collection.length,
         at: moment()
     }, '/schema/');
-    const getId = s => s.
     resource.link('pick', {href: '/schema/{id}', templated: true});
     resource.link('update', {href: '/schema/{id}', templated: true});
     resource.link('new', {href: '/schema/{id}', templated: true});
