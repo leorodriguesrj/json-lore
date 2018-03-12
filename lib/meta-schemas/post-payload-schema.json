@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "id": "http://company.org/schema/meta/post-payload",
+    "description": "POST metaschema",
+    "type": "object",
+    "required": ["body"],
+    "properties": {
+        "body": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+                "id": {
+                    "type":"string"
+                }
+            }
+        }
+    }
+}

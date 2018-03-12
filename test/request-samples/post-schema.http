@@ -1,0 +1,18 @@
+POST http://localhost:9001/schema/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "body": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "id": "http://company.org/schema/sample-alternative",
+        "description": "Sample schema alternative",
+        "type": "object",
+        "required": ["msg"],
+        "properties": {
+            "msg": {
+                "type": "string",
+                "description": "Some simple message"
+            }
+        }
+    }
+}
