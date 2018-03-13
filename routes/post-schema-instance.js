@@ -3,7 +3,7 @@ const schemas = require('../lib/bus-schema');
 
 module.exports = async function postSchemaInstance(request, response, next) {
     try {
-        const instance = request.body;
+        const instance = request.body.body;
         const outcome = await schemas.validate(request.params.id, instance);
         response.send(outcome);
         next();

@@ -9,7 +9,11 @@ const confirmSchemaExistsById = require('./confirm-schema-exists-by-id');
 const confirmPayloadIntegrity = require('./confirm-payload-integrity');
 const confirmCoherentSchemaId = require('./confirm-coherent-schema-id');
 
-const {putPayloadSchema, postPayloadSchema} = require('../lib/meta-schemas');
+const {
+    putPayloadSchema,
+    postPayloadSchema,
+    postInstancePayloadSchema
+} = require('../lib/meta-schemas');
 
 function mount(server) {
 
@@ -31,6 +35,7 @@ function mount(server) {
         putSchema);
 
     server.post('/schema/:id/instance',
+        confirmPayloadIntegrity(postInstancePayloadSchema),
         confirmSchemaExistsById,
         postSchemaInstance);
 
