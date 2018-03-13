@@ -1,0 +1,33 @@
+{
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 90,
+    "statements": 90,
+    "functions": 90,
+    "branches": 90,
+    "include": [
+        "lib/**/*.js",
+        "routes/**/*.js",
+        "test/**/*.test.js"
+    ],
+    "exclude": [
+        ".git/*",
+        ".nyc_output/*",
+        "config/*",
+        "coverage/*",
+        "docs/*",
+        "node_modules/*"
+    ],
+    "reporter": [
+        "lcov",
+        "text-summary"
+    ],
+    "watermarks": {
+        "lines": [90, 100],
+        "functions": [90, 100],
+        "branches": [90, 100],
+        "statements": [90, 100]
+    },
+    "all": true,
+    "cache": true
+}
