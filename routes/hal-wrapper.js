@@ -24,4 +24,12 @@ function wrapSchemaCollection(collection) {
     return resource;
 }
 
-module.exports = {wrapSchemaCollection, wrapSchema};
+function wrapValidationOutcome(id, outcome) {
+    const resource = hal.Resource({
+        at: moment(), body: outcome
+    }, `/schema/${id}/instance`);
+    resource.link('schema', {href: `/schema/${id}`});
+    return resource;
+}
+
+module.exports = {wrapSchemaCollection, wrapSchema, wrapValidationOutcome};
