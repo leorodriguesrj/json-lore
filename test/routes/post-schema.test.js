@@ -13,7 +13,7 @@ const wrapSchemaInvocation = sandbox.stub();
 const inferIdInvocation = sandbox.stub();
 const nextInvocation = sandbox.stub();
 
-const putSchema = proxyquire('../../routes/post-schema', {
+const postSchema = proxyquire('../../routes/post-schema', {
     './hal-wrapper': {wrapSchema: wrapSchemaInvocation},
     '../lib/bus-schema': {
         inferId: inferIdInvocation,
@@ -34,7 +34,7 @@ describe('routes/post-schema', () => {
         inferIdInvocation.returns('y');
         wrapSchemaInvocation.returns(wrappedBody);
 
-        await putSchema(request, response, nextInvocation);
+        await postSchema(request, response, nextInvocation);
 
         expect(inferIdInvocation).to.be.calledWith(body);
         expect(registerInvocation).to.be.calledWith('y', body);
@@ -46,7 +46,7 @@ describe('routes/post-schema', () => {
     it('Should respond with HTTP 500 if an exception occurs.', async () => {
         inferIdInvocation.throwsException(Error);
 
-        await putSchema(request, response, nextInvocation);
+        await postSchema(request, response, nextInvocation);
 
         expect(inferIdInvocation).to.be.calledWith(body);
         expect(registerInvocation).to.not.be.called;
