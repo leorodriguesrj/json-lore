@@ -5,8 +5,7 @@ This is very small application developed using Node JS and Javascript 6
 to "stash" JSON Schemas.
 
 Schemas are saved with a certain name under "http://host:port/schemas/:id".
-The list of endpoints is placed ahead and the HAL pattern is applied to requests
-and responses.
+The application currently uses the filesystem to save the schemas.
 
 ## Instalation
 
