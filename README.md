@@ -54,33 +54,60 @@ It will run the application with default configuration.
 
 The following endpoints are exposed as part of the REST API:
 
-#### http://localhost:9001/schema - Allows GET and POST
+#### http://localhost:9001/schema/
 
-- GET: Returns a list of currently saved schemas. The body of the request is
-ignored.
+- GET
+  - Description: List all currently saved schemas. The list may be empty tho.
+  - Request: The body of the request is ignored.
+  - Response:
+    - HTTP 200: Uppon success, the body contains a [HAL Resource][1] carrying
+    the list of saved schemas.
+    - HTTP 500: If an internal server error occurs.
 
-- POST: Creates or updates a schema. The body of the request is required and
-MUST obey the schema specification at http://localhost:9001/meta-schema/post.
+- POST
+  - Description: Creates or updates a schema.
+  - Request: It MUST obey the ["post payload specification"][2].
+  - Response:
+    - HTTP 200: Uppon success, the body contains a [HAL Resource][1] carrying
+    the representation of the saved schema.
+    - HTTP 400: If the request fails to adhere to the [specification][2].
+    - HTTP 500: If an internal server error occurs.
 
-#### http://localhost:9001/schema/:id - Allows GET and PUT
+#### http://localhost:9001/schema/:id/
 
-- GET: Return the single schema identified by ':id'. The resquest's body is
-ignored.
+- GET
+  - Description: Returns the single schema identified by ':id'.
+  - Request: The body of the request is ignored.
+  - Response:
+    - HTTP 200: Uppon success, the body contains a [HAL Resource][1] carrying
+    the representation of the reffered schema.
+    - HTTP 404: If there is no schema saved under ':id'.
+    - HTTP 500: If an internal server error occurs.
 
-- PUT: Updates a schema. The body of the request is required and MUST obey the
-schema specification at http://localhost:9001/meta-schema/put. Also if the
-'id' carried in the body differs from the one in the URL, the PUT operation will
-fail.
+- PUT
+  - Description: Updates an existing schema.
+  - Request: It MUST obey the ["put payload specification"][3].
+  - Response:
+    - HTTP 200: Uppon success, the body contains a [HAL Resource][1] carrying
+    the representation of the saved schema.
+    - HTTP 400: If the request fails to adhere to the [specification][3].
+    - HTTP 409: If the payload is marked with an 'id' different from ':id'.
+    - HTTP 404: If there is no schema saved under ':id'.
+    - HTTP 500: If an internal server error occurs.
 
-#### http://localhost:9001/schema/:id/instance - Allows only POST
+#### http://localhost:9001/schema/:id/instance
 
-An instance of a schema is a JSON object which is supposed to adhere to the
-format specified by said schema.
+- POST
+  - Description: Validates a JSON object against a schema identified by ':id'
+  - Request: It MUST obey the ["post instance payload specification"][4].
+  - Response:
+    - HTTP 200: Uppon success, the body contains a [HAL Resource][1] carrying
+    the representation of the validation outcome.
+    - HTTP 400: If the request fails to adhere to the [specification][4].
+    - HTTP 404: If there is no schema saved under ':id'.
+    - HTTP 500: If an internal server error occurs.
 
-When you post a JSON object on this endpoint, the app will run a validation
-procedure of that object against the schema identified by ':id'.
-
-If the schema ':id' exists, the response (under normal operation) will be HTTP
-200 and the body will have the outcome of the operation.
-
-If the schema ':id' does not exists, the response will be HTTP 404.
+[1]: "http://stateless.co/hal_specification.html"
+[2]: "http://localhost:9001/meta-schema/post-payload"
+[3]: "http://localhost:9001/meta-schema/put-payload"
+[4]: "http://localhost:9001/meta-schema/post-instance-payload"

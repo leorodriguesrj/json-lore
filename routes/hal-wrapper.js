@@ -2,11 +2,11 @@ const hal = require('hal');
 const moment = require('moment');
 const schemas = require('../lib/bus-schema');
 
-function wrapSchema(id, schema) {
+function wrapSchema(id, schema, basePath = '/schema/') {
     const resource = hal.Resource({
         at: moment(), body: schema
-    }, `/schema/${id}`);
-    resource.link('all', {href: '/schema/'});
+    }, `${basePath}${id}`);
+    resource.link('all', {href: basePath});
     return resource;
 }
 
