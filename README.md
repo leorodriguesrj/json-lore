@@ -107,6 +107,16 @@ The following endpoints are exposed as part of the REST API:
     - HTTP 404: If there is no schema saved under ':id'.
     - HTTP 500: If an internal server error occurs.
 
+##### Payload specifications
+
+The following links are available on any running instance, specifying the format
+of the various payloads:
+
+  - http://localhost:9001/meta-schema/post-payload
+  - http://localhost:9001/meta-schema/put-payload
+  - http://localhost:9001/meta-schema/post-instance-payload
+
+
 [1]: "http://stateless.co/hal_specification.html"
 [2]: "http://localhost:9001/meta-schema/post-payload"
 [3]: "http://localhost:9001/meta-schema/put-payload"
