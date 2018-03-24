@@ -18,10 +18,31 @@ describe('routes/hal-wrapper', () => {
     afterEach(() => sandbox.reset());
 
     describe('wrapSchema', () => {
-        it('Should return a resource with property "body".');
-        it('Should return a resource with the timestamp of operation.');
-        it('Should return a resource with the "self" link.');
-        it('Should return a resource with the "all" link.');
+        momentInvocation.returns('tomorrow');
+        const subject = halWrapper.wrapSchema(['k'], {m: 132134});
+
+        it('Should return a resource with property "body".', () => {
+            expect(subject).haveOwnProperty('body');
+            expect(subject.body).to.be.deep.equal({m: 132134});
+        });
+        it('Should return a resource with the timestamp of operation.', () => {
+            expect(subject).haveOwnProperty('at');
+            expect(subject.at).to.be.equal('tomorrow');
+        });
+        it('Should return a resource with the "self" link.', () => {
+            const links = subject._links;
+            expect(links).haveOwnProperty('self');
+            expect(links.self.href).to.be.equal('/schema/k');
+            expect(links.self.templated).to.be.undefined;
+            expect(links.self.rel).to.be.equal('self');
+        });
+        it('Should return a resource with the "all" link.', () => {
+            const links = subject._links;
+            expect(links).haveOwnProperty('all');
+            expect(links.all.href).to.be.equal('/schema/');
+            expect(links.all.templated).to.be.undefined;
+            expect(links.all.rel).to.be.equal('all');
+        });
     });
 
     describe('wrapSchemaCollection', () => {
