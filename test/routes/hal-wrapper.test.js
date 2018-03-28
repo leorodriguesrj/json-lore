@@ -1,3 +1,4 @@
+const {Resource} = require('hal');
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const chai = require('chai');
@@ -7,7 +8,6 @@ const sandbox = sinon.createSandbox();
 
 const inferIdInvocation = sandbox.stub();
 const momentInvocation = sandbox.stub();
-const wrapSchemaInvocation = sandbox.stub();
 
 const halWrapper = proxyquire('../../routes/hal-wrapper', {
     '../lib/bus-schema': {inferId: inferIdInvocation},
@@ -25,20 +25,14 @@ describe('routes/hal-wrapper', () => {
     });
 
     describe('wrapSchemaCollection', () => {
-        const altWrapper = proxyquire('../../routes/hal-wrapper', {
-            '../lib/bus-schema': {inferId: inferIdInvocation},
-            'moment': momentInvocation
-        });
-        altWrapper.wrapSchema = wrapSchemaInvocation;
-
-        wrapSchemaInvocation.returns('the-resource');
         momentInvocation.returns('yesterday');
-        const subject = altWrapper.wrapSchemaCollection(['y'], {a: 112358});
+        const subject = halWrapper.wrapSchemaCollection(['y'], {a: 112358});
 
         it('Should return a resource with the collection embedded.', () => {
             expect(subject).haveOwnProperty('_embedded');
             expect(subject._embedded).to.haveOwnProperty('items');
-            expect(subject._embedded.items).to.be.deep.equal(['the-resource']);
+            expect(subject._embedded.items).to.be.instanceOf(Array);
+            expect(subject._embedded.items[0]).to.be.instanceOf(Resource);
         });
         it('Should return a resource with the total number of items.', () => {
             expect(subject).haveOwnProperty('total');
