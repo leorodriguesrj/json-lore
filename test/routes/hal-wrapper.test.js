@@ -20,7 +20,7 @@ describe('routes/hal-wrapper', () => {
     describe('wrapSchema', () => {
         momentInvocation.returns('tomorrow');
         const subject = halWrapper.wrapSchema('k', {m: 132134});
-	const links = subject._links;
+        const links = subject._links;
 
         it('Should return a resource with property "body".', () => {
             expect(subject).to.haveOwnProperty('body');
