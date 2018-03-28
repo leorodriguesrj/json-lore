@@ -19,26 +19,26 @@ describe('routes/hal-wrapper', () => {
 
     describe('wrapSchema', () => {
         momentInvocation.returns('tomorrow');
-        const subject = halWrapper.wrapSchema('someid', 'the-object', '/here/');
-        const links = subject._links;
+        const subject = halWrapper.wrapSchema('k', {m: 132134});
+	const links = subject._links;
 
         it('Should return a resource with property "body".', () => {
-            expect(subject).haveOwnProperty('body');
-            expect(subject.body).to.be.equal('the-object');
+            expect(subject).to.haveOwnProperty('body');
+            expect(subject.body).to.be.deep.equal({m: 132134});
         });
         it('Should return a resource with the timestamp of operation.', () => {
-            expect(subject).haveOwnProperty('at');
+            expect(subject).to.haveOwnProperty('at');
             expect(subject.at).to.be.equal('tomorrow');
         });
         it('Should return a resource with the "self" link.', () => {
-            expect(links).hasOwnProperty('self');
-            expect(links.self.href).to.be.equal('/here/someid');
+            expect(links).to.haveOwnProperty('self');
+            expect(links.self.href).to.be.equal('/schema/k');
             expect(links.self.templated).to.be.undefined;
             expect(links.self.rel).to.be.equal('self');
         });
         it('Should return a resource with the "all" link.', () => {
-            expect(links).hasOwnProperty('all');
-            expect(links.all.href).to.be.equal('/here/');
+            expect(links).to.haveOwnProperty('all');
+            expect(links.all.href).to.be.equal('/schema/');
             expect(links.all.templated).to.be.undefined;
             expect(links.all.rel).to.be.equal('all');
         });
@@ -53,6 +53,7 @@ describe('routes/hal-wrapper', () => {
             expect(subject).haveOwnProperty('_embedded');
             expect(subject._embedded).to.haveOwnProperty('items');
             expect(subject._embedded.items).to.be.instanceOf(Array);
+            expect(subject._embedded.items.length).to.be.equal(1);
             expect(subject._embedded.items[0]).to.be.instanceOf(Resource);
         });
         it('Should return a resource with the total number of items.', () => {
