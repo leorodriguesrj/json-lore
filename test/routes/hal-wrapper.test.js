@@ -18,15 +18,36 @@ describe('routes/hal-wrapper', () => {
     afterEach(() => sandbox.reset());
 
     describe('wrapSchema', () => {
-        it('Should return a resource with property "body".');
-        it('Should return a resource with the timestamp of operation.');
-        it('Should return a resource with the "self" link.');
-        it('Should return a resource with the "all" link.');
+        momentInvocation.returns('tomorrow');
+        const subject = halWrapper.wrapSchema('someid', 'the-object', '/here/');
+        const links = subject._links;
+
+        it('Should return a resource with property "body".', () => {
+            expect(subject).haveOwnProperty('body');
+            expect(subject.body).to.be.equal('the-object');
+        });
+        it('Should return a resource with the timestamp of operation.', () => {
+            expect(subject).haveOwnProperty('at');
+            expect(subject.at).to.be.equal('tomorrow');
+        });
+        it('Should return a resource with the "self" link.', () => {
+            expect(links).hasOwnProperty('self');
+            expect(links.self.href).to.be.equal('/here/someid');
+            expect(links.self.templated).to.be.undefined;
+            expect(links.self.rel).to.be.equal('self');
+        });
+        it('Should return a resource with the "all" link.', () => {
+            expect(links).hasOwnProperty('all');
+            expect(links.all.href).to.be.equal('/here/');
+            expect(links.all.templated).to.be.undefined;
+            expect(links.all.rel).to.be.equal('all');
+        });
     });
 
     describe('wrapSchemaCollection', () => {
         momentInvocation.returns('yesterday');
         const subject = halWrapper.wrapSchemaCollection(['y'], {a: 112358});
+        const links = subject._links;
 
         it('Should return a resource with the collection embedded.', () => {
             expect(subject).haveOwnProperty('_embedded');
@@ -43,35 +64,30 @@ describe('routes/hal-wrapper', () => {
             expect(subject.at).to.be.equal('yesterday');
         });
         it('Should return a resource with the "self" link.', () => {
-            const links = subject._links;
             expect(links).haveOwnProperty('self');
             expect(links.self.href).to.be.equal('/schema/');
             expect(links.self.templated).to.be.undefined;
             expect(links.self.rel).to.be.equal('self');
         });
         it('Should return a resource with the "pick" link.', () => {
-            const links = subject._links;
             expect(links).haveOwnProperty('pick');
             expect(links.pick.href).to.be.equal('/schema/{id}');
             expect(links.pick.templated).to.be.true;
             expect(links.pick.rel).to.be.equal('pick');
         });
         it('Should return a resource with the "update" link.', () => {
-            const links = subject._links;
             expect(links).haveOwnProperty('update');
             expect(links.update.href).to.be.equal('/schema/{id}');
             expect(links.update.templated).to.be.true;
             expect(links.update.rel).to.be.equal('update');
         });
         it('Should return a resource with the "new" link.', () => {
-            const links = subject._links;
             expect(links).haveOwnProperty('new');
             expect(links.new.href).to.be.equal('/schema/{id}');
             expect(links.new.templated).to.be.true;
             expect(links.new.rel).to.be.equal('new');
         });
         it('Should return a resource with the "validate" link.', () => {
-            const links = subject._links;
             expect(links).haveOwnProperty('validate');
             expect(links.validate.href).to.be.equal('/schema/{id}/instance');
             expect(links.validate.templated).to.be.true;
@@ -80,7 +96,7 @@ describe('routes/hal-wrapper', () => {
     });
 
     describe('wrapValidationOutcome', () => {
-        momentInvocation.returns('now');
+        momentInvocation.returns('today');
         const subject = halWrapper.wrapValidationOutcome('x', {a: 112358});
 
         it('Should return a resource with a "body".', () => {
@@ -89,7 +105,7 @@ describe('routes/hal-wrapper', () => {
         });
         it('Should return a resource with the timestamp of operation.', () => {
             expect(subject).haveOwnProperty('at');
-            expect(subject.at).to.be.equal('now');
+            expect(subject.at).to.be.equal('today');
         });
         it('Should return a resource with the "self" link.', () => {
             expect(subject._links).haveOwnProperty('self');
