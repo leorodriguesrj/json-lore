@@ -29,7 +29,7 @@ const response = {send: sendInvocation};
 describe('routes/get-schema-id', () => {
     afterEach(() => sandbox.reset());
 
-    it('Should respond with "200 ok" if schema is found.', async () => {
+    it('Should respond with the schema found.', async () => {
         pickByIdInvocation.returns(schema);
         wrapSchemaInvocation.returns(wrappedSchema);
 

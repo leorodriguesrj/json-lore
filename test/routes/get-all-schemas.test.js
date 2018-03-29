@@ -27,7 +27,7 @@ const response = {send: sendInvocation};
 describe('routes/get-all-schemas', () => {
     afterEach(() => sandbox.reset());
 
-    it('Should respond with "200 ok".', async () => {
+    it('Should respond with the list of schemas found.', async () => {
         const schemas = ['a', 'b', 'c'];
         const wrapSchemaCollection = {};
 
