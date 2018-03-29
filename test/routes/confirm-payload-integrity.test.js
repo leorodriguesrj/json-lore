@@ -10,11 +10,10 @@ const validateInvocation = sandbox.stub();
 const nextInvocation = sandbox.stub();
 
 const {BadRequestError, InternalError} = require('restify-errors');
-const confirmPayloadIntegrity = proxyquire('../../routes/confirm-payload-integrity', {
-    '../lib/meta-schemas': {
-        validator: {validate: (b, s) => validateInvocation(b, s)}
-    }
-});
+const confirmPayloadIntegrity = proxyquire(
+    '../../routes/confirm-payload-integrity',
+    {'../lib/meta-schemas': {validator: {validate: validateInvocation}}}
+);
 
 const body = {};
 const request = {body};
@@ -28,12 +27,12 @@ describe('routes/confirm-payload-integrity', () => {
 
     it('Should continue to next step if validation succeeds', () => {
         validateInvocation.returns({valid: true});
-        const subject = confirmIntegriy(request, response, nextInvocation);
+        confirmIntegriy(request, response, nextInvocation);
         expect(nextInvocation).to.be.calledOnce;
     });
     it('Should fail with HTTP 400 if validation fails', () => {
         validateInvocation.returns({valid: false});
-        const subject = confirmIntegriy(request, response, nextInvocation);
+        confirmIntegriy(request, response, nextInvocation);
         expect(nextInvocation)
             .to.be.calledOnce
             .and.to.be.calledWithMatch(error =>
@@ -41,7 +40,7 @@ describe('routes/confirm-payload-integrity', () => {
     });
     it('Should fail with HTTP 500 if exception occurs', () => {
         validateInvocation.throwsException(Error);
-        const subject = confirmIntegriy(request, response, nextInvocation);
+        confirmIntegriy(request, response, nextInvocation);
         expect(nextInvocation)
             .to.be.calledOnce
             .and.to.be.calledWithMatch(error =>

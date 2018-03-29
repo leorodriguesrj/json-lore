@@ -6,11 +6,11 @@ function confirmPayloadIntegrity(payloadSchema) {
     return function confirmIntegrity(request, response, next) {
         try {
             const outcome = validator.validate(request.body, payloadSchema);
-            if (!outcome.valid) {
-                winston.warn('Malformed document received:', outcome.toString());
-                return next(new errors.BadRequestError('Malformed document.'));
+            if (outcome.valid) {
+                return next();
             }
-            next();
+            winston.warn('Malformed payload received:', outcome.toString());
+            next(new errors.BadRequestError('Malformed payload.'));
         } catch(error) {
             next(new errors.InternalError(error.message));
         }

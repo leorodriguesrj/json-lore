@@ -11,11 +11,10 @@ const existsInvocation = sandbox.stub();
 const nextInvocation = sandbox.stub();
 
 const {NotFoundError, InternalError} = require('restify-errors');
-const confirmSchemaExistsById = proxyquire('../../routes/confirm-schema-exists-by-id', {
-    '../lib/data-schema': {
-        exists: existsInvocation
-    }
-});
+const confirmSchemaExistsById = proxyquire(
+    '../../routes/confirm-schema-exists-by-id',
+    {'../lib/data-schema': {exists: existsInvocation}}
+);
 
 const request = {params: {id: 'xpto'}};
 const response = {};
