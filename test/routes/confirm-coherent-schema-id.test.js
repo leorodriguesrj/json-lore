@@ -23,7 +23,7 @@ describe('routes/confirm-coherent-schema-id', () => {
     afterEach(() => sandbox.reset());
 
     it('Should continue if body has no "id"', async () => {
-        inferIdInvocation.returns(undefined);
+        inferIdInvocation.returns('');
         await confirmCoherentSchemaId(request, response, nextInvocation);
         expect(inferIdInvocation)
             .to.be.calledOnce
