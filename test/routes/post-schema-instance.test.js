@@ -19,9 +19,9 @@ const postSchemaInstance = proxyquire('../../routes/post-schema-instance', {
     }
 });
 
-const body = {};
+const resource = {};
 const wrappedBody = {};
-const request = {body: {body}, params: {id: 'xpto'}};
+const request = {body: {resource}, params: {id: 'xpto'}};
 const response = {send: sendInvocation};
 
 describe('routes/post-schema-instance', () => {
@@ -33,7 +33,7 @@ describe('routes/post-schema-instance', () => {
 
         await postSchemaInstance(request, response, nextInvocation);
 
-        expect(validateInvocation).to.be.calledWith('xpto', body);
+        expect(validateInvocation).to.be.calledWith('xpto', resource);
         expect(wrapValidationOutcomeInvocation).to.be.calledWith('xpto', 'ok');
         expect(sendInvocation).to.be.calledWith(wrappedBody);
         expect(nextInvocation).to.be.calledOnce;
@@ -44,7 +44,7 @@ describe('routes/post-schema-instance', () => {
 
         await postSchemaInstance(request, response, nextInvocation);
 
-        expect(validateInvocation).to.be.calledWith('xpto', body);
+        expect(validateInvocation).to.be.calledWith('xpto', resource);
         expect(wrapValidationOutcomeInvocation).to.not.be.called;
         expect(sendInvocation).to.not.be.called;
         expect(nextInvocation).to.be.calledWithMatch(error => {

@@ -15,8 +15,8 @@ const confirmCoherentSchemaId = proxyquire(
     {'../lib/bus-schema': {inferId: inferIdInvocation}}
 );
 
-const innerBody = {};
-const request = {body: {body: innerBody}};
+const resource = {};
+const request = {body: {resource}};
 const response = {};
 
 describe('routes/confirm-coherent-schema-id', () => {
@@ -27,29 +27,35 @@ describe('routes/confirm-coherent-schema-id', () => {
         await confirmCoherentSchemaId(request, response, nextInvocation);
         expect(inferIdInvocation)
             .to.be.calledOnce
-            .and.to.be.calledWith(innerBody);
+            .and.to.be.calledWith(resource);
         expect(nextInvocation)
             .to.be.calledOnce;
     });
     it('Should continue if body and URI have the same "id"', async () => {
         inferIdInvocation.returns('z');
-        const innerBody = {};
-        const localRequest = {body: {body: innerBody}, params: {id: 'z'}};
+        const localResource = {};
+        const localRequest = {
+            body: {resource: localResource},
+            params: {id: 'z'}
+        };
         await confirmCoherentSchemaId(localRequest, response, nextInvocation);
         expect(inferIdInvocation)
             .to.be.calledOnce
-            .and.to.be.calledWith(innerBody);
+            .and.to.be.calledWith(localResource);
         expect(nextInvocation)
             .to.be.calledOnce;
     });
     it('Should fail with HTTP 409 if body and URL ids differ', async () => {
         inferIdInvocation.returns('x');
-        const innerBody = {};
-        const localRequest = {body: {body: innerBody}, params: {id: 'y'}};
+        const localResource = {};
+        const localRequest = {
+            body: {resource: localResource},
+            params: {id: 'y'}
+        };
         await confirmCoherentSchemaId(localRequest, response, nextInvocation);
         expect(inferIdInvocation)
             .to.be.calledOnce
-            .and.to.be.calledWith(innerBody);
+            .and.to.be.calledWith(localResource);
         expect(nextInvocation)
             .to.be.calledOnce
             .and.to.be.calledWithMatch(error =>

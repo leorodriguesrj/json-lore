@@ -3,7 +3,7 @@ const schemas = require('../lib/bus-schema');
 
 async function confirmCoherentSchemaId(request, response, next) {
     try {
-        const bodyId = schemas.inferId(request.body.body);
+        const bodyId = schemas.inferId(request.body.resource);
         if (bodyId === '')
             return next();
         if (bodyId === request.params.id)

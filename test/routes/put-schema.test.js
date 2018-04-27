@@ -17,9 +17,9 @@ const putSchema = proxyquire('../../routes/put-schema', {
     '../lib/bus-schema': {register: registerInvocation}
 });
 
-const body = {};
+const resource = {};
 const wrappedBody = {};
-const request = {params: {id: 'x'}, body: {body}};
+const request = {params: {id: 'x'}, body: {resource}};
 const response = {send: sendInvocation};
 
 describe('routes/put-schema', () => {
@@ -31,8 +31,8 @@ describe('routes/put-schema', () => {
 
         await putSchema(request, response, nextInvocation);
 
-        expect(registerInvocation).to.be.calledWith('x', body);
-        expect(wrapSchemaInvocation).to.be.calledWith('x', body);
+        expect(registerInvocation).to.be.calledWith('x', resource);
+        expect(wrapSchemaInvocation).to.be.calledWith('x', resource);
         expect(sendInvocation).to.be.calledWith(wrappedBody);
         expect(nextInvocation).to.be.calledOnce;
     });
@@ -42,7 +42,7 @@ describe('routes/put-schema', () => {
 
         await putSchema(request, response, nextInvocation);
 
-        expect(registerInvocation).to.be.calledWith('x', body);
+        expect(registerInvocation).to.be.calledWith('x', resource);
         expect(wrapSchemaInvocation).to.not.be.called;
         expect(sendInvocation).to.not.be.called;
         expect(nextInvocation).to.be.calledWithMatch(error => {

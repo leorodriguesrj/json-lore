@@ -6,7 +6,7 @@ const halWrapper = require('./hal-wrapper');
 module.exports = async function postSchemaInstance(request, response, next) {
     try {
         const id = request.params.id;
-        const instance = request.body.body;
+        const instance = request.body.resource;
         const outcome = await schemas.validate(id, instance);
         response.send(halWrapper.wrapValidationOutcome(id, outcome));
         next();

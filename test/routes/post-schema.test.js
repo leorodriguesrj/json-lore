@@ -21,9 +21,9 @@ const postSchema = proxyquire('../../routes/post-schema', {
     }
 });
 
-const body = {};
+const resource = {};
 const wrappedBody = {};
-const request = {body: {body}};
+const request = {body: {resource}};
 const response = {send: sendInvocation};
 
 describe('routes/post-schema', () => {
@@ -36,9 +36,9 @@ describe('routes/post-schema', () => {
 
         await postSchema(request, response, nextInvocation);
 
-        expect(inferIdInvocation).to.be.calledWith(body);
-        expect(registerInvocation).to.be.calledWith('y', body);
-        expect(wrapSchemaInvocation).to.be.calledWith('y', body);
+        expect(inferIdInvocation).to.be.calledWith(resource);
+        expect(registerInvocation).to.be.calledWith('y', resource);
+        expect(wrapSchemaInvocation).to.be.calledWith('y', resource);
         expect(sendInvocation).to.be.calledWith(wrappedBody);
         expect(nextInvocation).to.be.calledOnce;
     });
@@ -48,7 +48,7 @@ describe('routes/post-schema', () => {
 
         await postSchema(request, response, nextInvocation);
 
-        expect(inferIdInvocation).to.be.calledWith(body);
+        expect(inferIdInvocation).to.be.calledWith(resource);
         expect(registerInvocation).to.not.be.called;
         expect(wrapSchemaInvocation).to.not.be.called;
         expect(sendInvocation).to.not.be.called;

@@ -5,10 +5,10 @@ const halWrapper = require('./hal-wrapper');
 
 module.exports = async function postSchema(request, response, next) {
     try {
-        const representation = request.body.body;
-        const id = schemas.inferId(representation);
-        await schemas.register(id, representation);
-        response.send(halWrapper.wrapSchema(id, representation));
+        const resource = request.body.resource;
+        const id = schemas.inferId(resource);
+        await schemas.register(id, resource);
+        response.send(halWrapper.wrapSchema(id, resource));
         next();
     } catch(error) {
         next(new errors.InternalError(error.message));
