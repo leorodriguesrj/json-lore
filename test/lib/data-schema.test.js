@@ -49,7 +49,7 @@ describe('lib/data-schema', () => {
                 { anotherName: 'anotherValue' }
             ]);
         });
-        it('Should throw if cache listing fails', async () => {
+        it('Should throw if cache listing fails', () => {
             readdirAux.returns({ error: 'fake error', data: undefined });
 
             return dataSchema.findAll()
@@ -62,7 +62,7 @@ describe('lib/data-schema', () => {
                     expect(readFileAux).to.not.be.called;
                 });
         });
-        it('Should throw if at least one file fails to load', async () => {
+        it('Should throw if at least one file fails to load', () => {
             readdirAux.returns({
                 error: undefined, data: ['schema1.json', 'schema2.json']
             });
