@@ -27,7 +27,6 @@ const dataSchema = proxyquire('../../lib/data-schema', {
 describe('lib/data-schema', () => {
     describe('findAll', () => {
         afterEach(() => sandbox.reset());
-
         it('Should load the two files listed by fs', async () => {
             readdirAux.returns({
                 error: undefined, data: ['schema1.json', 'schema2.json']
@@ -50,8 +49,42 @@ describe('lib/data-schema', () => {
                 { anotherName: 'anotherValue' }
             ]);
         });
-        it('Should reject/throw if cache listing fails');
-        it('Should reject/throw if at list one file fails to load');
+        it('Should throw if cache listing fails', async () => {
+            readdirAux.returns({ error: 'fake error', data: undefined });
+
+            return dataSchema.findAll()
+                .then(() => {
+                    return Promise.reject('This call should not succeed!');
+                })
+                .catch(error => {
+                    expect(error).to.be.equal('fake error');
+                    expect(readdirAux).to.be.calledOnce;
+                    expect(readFileAux).to.not.be.called;
+                });
+        });
+        it('Should throw if at least one file fails to load', async () => {
+            readdirAux.returns({
+                error: undefined, data: ['schema1.json', 'schema2.json']
+            });
+
+            readFileAux.onCall(0).returns({
+                error: undefined, data: '{"someName": "someValue"}'
+            });
+
+            readFileAux.onCall(1).returns({
+                error: 'fake error', data: undefined
+            });
+
+            return dataSchema.findAll()
+                .then(() => {
+                    return Promise.reject('This call should not succeed!');
+                })
+                .catch(error => {
+                    expect(error).to.be.equal('fake error');
+                    expect(readdirAux).to.be.calledOnce;
+                    expect(readFileAux).to.be.calledTwice;
+                });
+        });
     });
     describe('pickById', () => {
         it('Should load the contents of file with id "z"');
