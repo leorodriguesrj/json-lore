@@ -87,8 +87,27 @@ describe('lib/data-schema', () => {
         });
     });
     describe('pickById', () => {
-        it('Should load the contents of file with id "z"');
-        it('Should throw error from the underlying fs');
+        afterEach(() => sandbox.reset());
+        it('Should load the contents of file with id "z"', async () => {
+            readFileAux.returns({
+                error: undefined, data: '{"oneOtherName": "oneOtherValue"}'
+            });
+            const schema = await dataSchema.pickById('someSchema');
+            expect(schema).to.be.deep.equals({oneOtherName: 'oneOtherValue'});
+        });
+        it('Should throw error from the underlying fs', () => {
+            readFileAux.returns({
+                error: 'fake error', data: undefined
+            });
+            return dataSchema.pickById('someSchema')
+                .then(() => {
+                    return Promise.reject('This call should not succeed!');
+                })
+                .catch(error => {
+                    expect(error).to.be.equal('fake error');
+                    expect(readFileAux).to.be.calledOnce;
+                });
+        });
     });
     describe('exists', () => {
         it('Should find the file with id "x"');
