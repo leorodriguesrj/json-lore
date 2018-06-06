@@ -50,6 +50,8 @@ describe('lib/data-schema', () => {
                 { anotherName: 'anotherValue' }
             ]);
         });
+        it('Should reject/throw if cache listing fails');
+        it('Should reject/throw if at list one file fails to load');
     });
     describe('pickById', () => {
         it('Should load the contents of file with id "z"');
