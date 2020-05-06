@@ -1,4 +1,5 @@
 # json-lore
+
 A JSON schema database and validation tool.
 
 This is very small application developed using Node JS and Javascript 6
